@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>Lab de Cortes · Conta</title>
+<style>body{background:#120a1f;color:#fff;font:16px system-ui;display:grid;place-items:center;height:100vh;margin:0}
+.c{background:#1d1030;border:1px solid #ff2e88;border-radius:16px;padding:32px 40px;text-align:center;max-width:520px}
+.ok{color:#2de2e6}.err{color:#ff6b8a}a{color:#ffb347}</style></head>
+<body><div class="c"><h2 class="{{ 'ok' if ok else 'err' }}">{{ '✅' if ok else '⚠️' }} {{ msg }}</h2>
+<p>Pode fechar esta aba e voltar para o <a href="/">Lab de Cortes</a>.</p></div>
+<script>setTimeout(()=>{ if (window.opener) window.close(); }, 2500)</script></body></html>

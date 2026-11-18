@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab de Cortes · Login TikTok</title>
+<style>
+  body{margin:0;min-height:100vh;display:grid;place-items:center;font:16px system-ui;color:#fff;
+       background:linear-gradient(180deg,#12002b 0%,#4a0f5c 55%,#ff2e88 100%)}
+  .c{background:rgba(18,10,31,.85);border:1px solid #ff2e88;border-radius:16px;padding:28px 34px;max-width:560px;text-align:center}
+  code{display:block;background:#0b0614;border-radius:8px;padding:10px;margin:12px 0;word-break:break-all;color:#2de2e6}
+  button{background:#ff2e88;color:#fff;border:0;border-radius:8px;padding:10px 16px;font-weight:700;cursor:pointer}
+  small{color:#cbb}
+</style>
+</head>
+<body>
+<div class="c">
+  <h2 id="t">Conectando ao Lab de Cortes...</h2>
+  <p id="m">Redirecionando para o programa no seu computador.</p>
+  <div id="manual" hidden>
+    <p>Se não abriu sozinho, copie o código abaixo e cole em <b>Contas → TikTok → Colar código</b>:</p>
+    <code id="cod"></code>
+    <button onclick="navigator.clipboard.writeText(document.getElementById('cod').textContent)">Copiar código</button>
+  </div>
+  <p><small>Esta página só repassa o login do TikTok para o Lab de Cortes que roda no seu PC (porta 5000).</small></p>
+</div>
+<script>
+  const q = new URLSearchParams(location.search);
+  const porta = q.get("porta") || "5000";
+  if (q.get("error")) {
+    document.getElementById("t").textContent = "O TikTok não autorizou";
+    document.getElementById("m").textContent = q.get("error_description") || q.get("error");
+  } else if (q.get("code")) {
+    document.getElementById("cod").textContent = q.get("code");
+    setTimeout(() => (document.getElementById("manual").hidden = false), 2500);
+    location.href = `http://127.0.0.1:${porta}/contas/tiktok/callback` + location.search;
+  } else {
+    document.getElementById("t").textContent = "Página de retorno do login";
+    document.getElementById("m").textContent = "Use esta URL como Redirect URI no app do TikTok for Developers.";
+  }
+</script>
+</body>
+</html>

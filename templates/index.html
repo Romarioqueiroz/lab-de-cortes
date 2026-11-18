@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab de Cortes</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="tema-gta6">
+
+<header class="topo">
+  <div class="logo"><span class="rec"></span> Lab de Cortes</div>
+  <nav class="abas">
+    <button data-aba="gta6" class="ativa">🌴 GTA 6</button>
+    <button data-aba="geral">✂ Lab geral</button>
+    <button data-aba="contas">🔗 Contas</button>
+    <button data-aba="pubs">📤 Publicações <span id="pubs-badge" class="badge-n" hidden></span></button>
+  </nav>
+  <div class="contas-mini">
+    <span id="mini-tiktok" class="mini off" title="TikTok">TikTok</span>
+    <span id="mini-instagram" class="mini off" title="Instagram">Instagram</span>
+  </div>
+</header>
+
+<!-- ======================================================== HERO GTA 6 -->
+<section class="hero" id="hero-gta6">
+  <div class="ceu">
+    <div class="sol"></div>
+    <svg class="palmeiras" viewBox="0 0 1200 220" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <g fill="#12002b">
+        <path d="M120 220 C125 150 132 110 150 70 L156 72 C140 112 134 152 132 220Z"/>
+        <path d="M152 70 C120 50 90 52 60 70 C92 58 122 62 150 74Z M152 70 C170 40 205 30 235 38 C205 40 178 52 156 74Z
+                 M152 70 C140 38 118 20 92 18 C118 28 136 46 150 74Z M152 70 C186 64 214 78 232 104 C208 84 182 76 154 74Z
+                 M152 70 C118 76 96 96 86 120 C104 98 126 84 150 76Z"/>
+        <path d="M1040 220 C1036 160 1030 120 1012 84 L1006 86 C1022 122 1028 162 1028 220Z"/>
+        <path d="M1010 84 C1040 62 1072 62 1104 80 C1072 70 1042 74 1012 88Z M1010 84 C994 52 960 42 930 50 C960 52 986 64 1006 88Z
+                 M1010 84 C1024 52 1046 34 1072 32 C1046 42 1028 60 1012 88Z M1010 84 C976 78 948 92 930 118 C954 98 980 90 1008 88Z"/>
+        <rect x="0" y="200" width="1200" height="20"/>
+        <path d="M300 200 L300 150 L330 150 L330 200Z M335 200 L335 120 L370 120 L370 200Z M380 200 L380 160 L400 160 L400 200Z
+                 M760 200 L760 140 L790 140 L790 200Z M795 200 L795 105 L830 105 L830 200Z M840 200 L840 150 L870 150 L870 200Z"/>
+      </g>
+    </svg>
+  </div>
+  <div class="hero-txt">
+    <div class="hero-tag">Lab de Cortes · Edição especial</div>
+    <h1>GTA <span>6</span></h1>
+    <p>Cortes de lives de GTA 6 prontos para TikTok e Reels: perseguições, bugs, reações e descobertas em Leonida.</p>
+    <div class="contagem" id="contagem"></div>
+  </div>
+</section>
+
+<!-- ======================================================== LAB (GTA 6 / GERAL) -->
+<main id="aba-lab" class="lab">
+  <!-- botão global de postar automático -->
+  <div class="auto-barra" id="auto-barra">
+    <label class="switch"><input type="checkbox" id="auto-ativo"><span></span></label>
+    <div class="auto-txt"><b>🚀 Postar automático</b><small id="auto-sub">Desligado: os cortes ficam esperando você revisar e postar.</small></div>
+    <label class="rede-chip" data-rede="tiktok"><input type="checkbox" value="tiktok"> <b>TikTok</b> <em></em></label>
+    <label class="rede-chip" data-rede="instagram"><input type="checkbox" value="instagram"> <b>Instagram</b> <em></em></label>
+  </div>
+
+  <div class="marca-barra">
+    <b>🏷 Marca d'água</b>
+    <input id="marca-global" placeholder="@seucanal">
+    <button type="button" id="marca-aplicar">Trocar em todos os cortes já feitos</button>
+    <small id="marca-msg">Muda o @ dos cortes prontos (refaz os vídeos) e dos próximos.</small>
+  </div>
+
+  <section class="painel form-painel">
+    <div class="sub-abas">
+      <button type="button" data-modo="streamers" class="ativa">📡 Streamers (automático)</button>
+      <button type="button" data-modo="manual">🔗 Link manual</button>
+    </div>
+
+    <!-- ===== modo automático: radar de streamers ===== -->
+    <div id="modo-streamers">
+      <div class="radar-topo">
+        <div>
+          <h2 class="titulo-form"><span>Radar de streamers</span></h2>
+          <div class="radar-status" id="radar-status">Desligado</div>
+        </div>
+        <label class="switch" title="Ligar/desligar o radar"><input type="checkbox" id="radar-ligado"><span></span></label>
+      </div>
+      <p class="dica">Ligue o radar e pronto: o Lab <b>descobre sozinho quem está jogando GTA 6</b> em cada plataforma, pega os <b>clipes mais vistos</b> (Twitch e Kick) e as <b>lives novas</b> (YouTube usa os trechos "mais repetidos"), corta, edita e posta se o 🚀 estiver ligado.</p>
+
+      <div class="descoberta">
+        <div class="desc-topo">
+          <label class="switch"><input type="checkbox" id="dc-ligado"><span></span></label>
+          <div><b>🔎 Descobrir streamers automaticamente</b><small>Procura a cada verificação quem está jogando GTA 6</small></div>
+        </div>
+        <div class="desc-op">
+          <label class="rede-chip"><input type="checkbox" class="dc-plat" value="twitch"> Twitch</label>
+          <label class="rede-chip"><input type="checkbox" class="dc-plat" value="kick"> Kick</label>
+          <label class="rede-chip"><input type="checkbox" class="dc-plat" value="youtube"> YouTube</label>
+          <select id="dc-idioma" title="Idioma das lives">
+            <option value="pt">Português</option><option value="es">Espanhol</option><option value="en">Inglês</option><option value="">Qualquer idioma</option>
+          </select>
+        </div>
+        <button type="button" id="dc-agora">🔎 Descobrir streamers agora</button>
+      </div>
+
+      <details class="manual-add">
+        <summary>➕ Adicionar um streamer específico (opcional)</summary>
+      <div class="add-streamer">
+        <input id="st-usuario" placeholder="@streamer ou link do canal">
+        <select id="st-plat">
+          <option value="twitch">Twitch</option><option value="kick">Kick</option>
+          <option value="youtube">YouTube</option><option value="outra">Outra (link)</option>
+        </select>
+        <select id="st-tipo">
+          <option value="clipes">Clipes mais vistos</option>
+          <option value="lives">Lives completas</option>
+        </select>
+        <button type="button" id="st-add">+ Adicionar</button>
+      </div>
+      <div class="msg" id="st-msg"></div>
+      </details>
+      <h3 class="lista-tit">Streamers no radar <span id="st-cont"></span></h3>
+      <div id="lista-streamers"></div>
+      <div class="botoes"><button type="button" class="sec" id="radar-agora">↻ Verificar agora</button></div>
+
+      <details>
+        <summary>Configurações do radar</summary>
+        <div class="grade">
+          <label class="largo">Só pegar se tiver (título ou jogo)<input id="rd-filtro" placeholder="gta 6, gta vi, grand theft auto vi"></label>
+          <label>Clipes do período
+            <select id="rd-periodo"><option value="24h">Últimas 24 horas</option><option value="7d">Últimos 7 dias</option><option value="30d">Últimos 30 dias</option></select>
+          </label>
+          <label>Por streamer a cada verificação<input type="number" id="rd-por" min="1" max="10"></label>
+          <label>Mínimo de visualizações<input type="number" id="rd-min" min="0" step="10"></label>
+          <label>Verificar a cada (minutos)<input type="number" id="rd-intervalo" min="10" step="5"></label>
+          <label>Descobrir até (por plataforma)<input type="number" id="rd-dmax" min="1" max="30"></label>
+          <label>Mínimo de pessoas assistindo<input type="number" id="rd-dmin" min="0" step="10"></label>
+          <label class="largo">Busca no YouTube<input id="rd-termo" placeholder="GTA 6 ao vivo"></label>
+        </div>
+        <p class="dica">Deixe o filtro vazio para pegar qualquer jogo. A edição (cor, @, legendas, duração) segue as configurações da aba <b>Link manual</b>.</p>
+      </details>
+      <details>
+        <summary>Atividade do radar</summary>
+        <pre class="log" id="radar-log"></pre>
+      </details>
+    </div>
+
+    <form id="form" hidden>
+      <h2 class="titulo-form"><span id="form-titulo">Nova live de GTA 6</span></h2>
+      <label class="grande">Link da live ou caminho do arquivo
+        <input name="url" placeholder="youtube.com/watch?v=...  •  twitch.tv/videos/...  •  kick.com/...  •  C:\lives\live.mp4" required>
+      </label>
+
+      <div class="grade">
+        <label>Nº de cortes automáticos<input type="number" name="n_clipes" min="0" max="30"></label>
+        <label>Seu @ (marca d'água)<input name="marca" placeholder="@seucanal"></label>
+        <label>Duração mín. (s)<input type="number" name="dur_min" min="5" max="180"></label>
+        <label>Duração máx. (s)<input type="number" name="dur_max" min="10" max="180"></label>
+      </div>
+
+      <h3>Edição do vídeo</h3>
+      <div class="grade">
+        <label>Cor de destaque<input type="color" name="cor"></label>
+        <label>Cor do vídeo
+          <select name="preset">{% for p in presets %}<option>{{ p }}</option>{% endfor %}</select>
+        </label>
+        <label>Zoom <output id="zoomv"></output>
+          <input type="range" name="zoom" min="1" max="1.4" step="0.02">
+        </label>
+        <label>Enquadramento
+          <select name="enquadramento">
+            <option value="completo">Completo (16:9)</option>
+            <option value="aproximado">Aproximado (4:3, maior)</option>
+          </select>
+        </label>
+      </div>
+      <div class="checks">
+        <label><input type="checkbox" name="legendas"> Legendas automáticas</label>
+        <label><input type="checkbox" name="titulo"> Título/gancho no topo</label>
+        <label><input type="checkbox" name="barra"> Barra de progresso</label>
+      </div>
+
+      <h3>Descrição dos posts</h3>
+      <label>Hashtags fixas (vão em todos os posts)<input name="hashtags" placeholder="#GTA6 #GTAVI"></label>
+      <p class="dica">O Lab soma hashtags do assunto do corte (ex.: falou "Lucia" → #Lucia) e algumas gerais.</p>
+
+      <details>
+        <summary>O que conta para achar um bom momento</summary>
+        <div class="pesos">
+          <label>🔊 Volume / barulho <output></output><input type="range" name="peso_volume" min="0" max="3" step="0.25"></label>
+          <label>🎙 Entonação da voz <output></output><input type="range" name="peso_voz" min="0" max="3" step="0.25"></label>
+          <label>💬 Agitação do chat <output></output><input type="range" name="peso_chat" min="0" max="3" step="0.25"></label>
+          <label>🗣 Palavras da fala <output></output><input type="range" name="peso_fala" min="0" max="3" step="0.25"></label>
+        </div>
+        <div class="checks">
+          <label><input type="checkbox" name="usar_chat"> Baixar o chat da live (YouTube e Twitch)</label>
+          <label class="mini-in">Atraso do chat (s)<input type="number" name="atraso_chat" min="0" max="30" step="1"></label>
+        </div>
+        <div id="gatilhos-box">
+          <p class="dica">Palavras que contam como momento forte neste perfil:</p>
+          <div class="chips" id="gatilhos-chips"></div>
+        </div>
+        <label>Palavras extras (separe por vírgula)<input name="gatilhos_extra" placeholder="ex.: nome do seu carro, apelido do amigo"></label>
+      </details>
+
+      <details>
+        <summary>Momentos que eu já sei</summary>
+        <p class="dica">Um por linha, no horário da live. Ex.: <code>1:23:45-1:24:30</code> ou só <code>2:05:10</code>.</p>
+        <textarea name="manuais" rows="3" placeholder="1:23:45-1:24:30&#10;2:05:10"></textarea>
+      </details>
+
+      <details>
+        <summary>Avançado</summary>
+        <div class="grade">
+          <label>Trecho da live: início<input name="trecho_ini" placeholder="ex.: 0:30:00"></label>
+          <label>Trecho da live: fim<input name="trecho_fim" placeholder="ex.: 2:00:00"></label>
+          <label>Modelo de transcrição
+            <select name="modelo">
+              <option value="tiny">tiny (mais rápido)</option>
+              <option value="base">base</option>
+              <option value="small">small (equilibrado)</option>
+              <option value="medium">medium (melhor, lento sem GPU)</option>
+              <option value="large-v3">large-v3 (precisa de GPU)</option>
+            </select>
+          </label>
+          <label>Idioma da live<input name="idioma" placeholder="pt"></label>
+          <label>Cookies do navegador
+            <select name="cookies">
+              <option value="">Não usar</option>
+              <option>chrome</option><option>edge</option><option>firefox</option><option>brave</option><option>opera</option>
+            </select>
+          </label>
+          <label class="check-inline"><input type="checkbox" name="apagar_live"> Apagar a live baixada no final</label>
+        </div>
+        <h3>IA para escolher, dar título e escrever a descrição (opcional)</h3>
+        <div class="grade">
+          <label class="largo">Chave da API da Anthropic<input name="ia_chave" type="password" placeholder="sk-ant-... (fica salva só neste navegador)"></label>
+          <label>Modelo<input name="ia_modelo"></label>
+        </div>
+      </details>
+
+      <button type="submit" id="enviar">✂ Gerar cortes</button>
+      <div id="msg" class="msg"></div>
+    </form>
+  </section>
+
+  <section id="jobs"></section>
+</main>
+
+<!-- ======================================================== CONTAS -->
+<main id="aba-contas" class="pagina" hidden>
+  <div class="contas-grade">
+    <section class="painel conta" id="conta-tiktok">
+      <div class="conta-topo"><h2>TikTok</h2><span class="estado"></span></div>
+      <p class="dica">Usa a API oficial do TikTok (Content Posting API). Você cria um app grátis no TikTok for Developers uma única vez.</p>
+      <div class="grade">
+        <label>Client Key<input name="client_key"></label>
+        <label>Client Secret<input name="client_secret" type="password" placeholder="(salvo — deixe vazio para manter)"></label>
+        <label class="largo">Redirect URI<input name="redirect_uri" placeholder="https://SEU-USUARIO.github.io/lab-de-cortes/callback.html"></label>
+      </div>
+      <div class="botoes">
+        <button class="sec" data-acao="tk-salvar">Salvar</button>
+        <button data-acao="tk-conectar">Conectar TikTok</button>
+        <button class="sec perigo" data-acao="tk-sair">Desconectar</button>
+      </div>
+      <details>
+        <summary>Não voltou sozinho? Colar código</summary>
+        <div class="linha-in"><input name="tk_codigo" placeholder="Cole aqui o código ou a URL inteira"><button class="sec" data-acao="tk-codigo">Usar código</button></div>
+      </details>
+      <h3>Padrão para postar automático</h3>
+      <div class="grade">
+        <label>Modo
+          <select name="padrao_modo">
+            <option value="rascunho">Enviar para rascunhos (eu finalizo no app)</option>
+            <option value="direto">Postar direto</option>
+          </select>
+        </label>
+        <label>Quem pode ver (postar direto)
+          <select name="padrao_privacidade">
+            <option value="PUBLIC_TO_EVERYONE">Todo mundo</option>
+            <option value="FOLLOWER_OF_CREATOR">Seguidores</option>
+            <option value="MUTUAL_FOLLOW_FRIENDS">Amigos</option>
+            <option value="SELF_ONLY">Só eu</option>
+          </select>
+        </label>
+      </div>
+      <details class="guia">
+        <summary>Como criar o app do TikTok (passo a passo)</summary>
+        <ol>
+          <li>Suba este projeto no GitHub e ative o <b>GitHub Pages</b> (Settings → Pages → Branch <code>main</code>, pasta <code>/docs</code>). Sua Redirect URI será <code>https://SEU-USUARIO.github.io/NOME-DO-REPO/callback.html</code>.</li>
+          <li>Entre em <b>developers.tiktok.com</b> → <i>Manage apps</i> → <i>Connect an app</i>.</li>
+          <li>Adicione os produtos <b>Login Kit</b> e <b>Content Posting API</b> (ative <i>Direct Post</i>).</li>
+          <li>Em <i>Scopes</i>, marque <code>user.info.basic</code>, <code>video.upload</code> e <code>video.publish</code>.</li>
+          <li>Em <i>Login Kit → Redirect URI</i>, cole a URL do passo 1.</li>
+          <li>Copie o <b>Client Key</b> e o <b>Client Secret</b> para cá, salve e clique em <b>Conectar TikTok</b>.</li>
+        </ol>
+        <p class="dica">⚠ Enquanto o app não passar pela revisão do TikTok, o <b>postar direto</b> só publica como <b>privado</b> ("Só eu"). O modo <b>rascunho</b> funciona: o vídeo chega no seu TikTok e você toca em publicar.</p>
+      </details>
+    </section>
+
+    <section class="painel conta" id="conta-instagram">
+      <div class="conta-topo"><h2>Instagram</h2><span class="estado"></span></div>
+      <p class="dica">Posta Reels pela API oficial da Meta. Precisa de conta <b>Profissional</b> (Criador ou Empresa) ligada a uma <b>Página do Facebook</b>.</p>
+      <div class="grade">
+        <label>App ID<input name="app_id"></label>
+        <label>App Secret<input name="app_secret" type="password" placeholder="(salvo — deixe vazio para manter)"></label>
+        <label class="largo">Token de acesso<input name="token" placeholder="Cole o token gerado no Graph API Explorer"></label>
+        <label>Versão da API<input name="versao" placeholder="v23.0"></label>
+        <label>Conta<select name="ig_conta"></select></label>
+      </div>
+      <div class="botoes">
+        <button data-acao="ig-conectar">Conectar Instagram</button>
+        <button class="sec perigo" data-acao="ig-sair">Desconectar</button>
+      </div>
+      <details class="guia">
+        <summary>Como gerar o token do Instagram (passo a passo)</summary>
+        <ol>
+          <li>No app do Instagram, troque para <b>conta profissional</b> e ligue a uma <b>Página do Facebook</b>.</li>
+          <li>Entre em <b>developers.facebook.com</b> → <i>Meus apps</i> → <i>Criar app</i> (tipo <i>Empresa</i>) e adicione o produto <b>Instagram</b> (configuração com <i>Login do Facebook para Empresas</i>).</li>
+          <li>Copie o <b>App ID</b> e o <b>App Secret</b> (Configurações → Básico) para cá.</li>
+          <li>Abra o <b>Graph API Explorer</b>, escolha o seu app e adicione as permissões: <code>instagram_basic</code>, <code>instagram_content_publish</code>, <code>pages_show_list</code>, <code>pages_read_engagement</code>, <code>business_management</code>.</li>
+          <li>Clique em <b>Generate Access Token</b>, autorize, copie o token e cole aqui. O Lab troca por um token de 60 dias.</li>
+        </ol>
+        <p class="dica">Enquanto o app estiver em modo de desenvolvimento, ele funciona para a sua própria conta (você é administrador do app). Depois de 60 dias, gere um token novo e conecte de novo.</p>
+      </details>
+    </section>
+  </div>
+</main>
+
+<!-- ======================================================== PUBLICAÇÕES -->
+<main id="aba-pubs" class="pagina" hidden>
+  <section class="painel">
+    <h2>Publicações</h2>
+    <div id="lista-pubs"></div>
+  </section>
+</main>
+
+<!-- ======================================================== MODAL EDITAR -->
+<div class="modal" id="modal-editar" hidden>
+  <div class="caixa grande-modal">
+    <div class="modal-topo"><h2>✏ Editar corte <span class="ed-n"></span></h2><button class="fechar" data-fechar>✕</button></div>
+    <div class="ed-grade">
+      <div class="ed-video">
+        <video id="ed-video" preload="metadata" playsinline></video>
+        <div class="ed-sem-fonte" hidden>O arquivo da live foi apagado. Dá para editar só título e descrição.</div>
+        <div class="ed-trilha" id="ed-trilha">
+          <div class="ed-sel"></div><div class="ed-cabeca"></div>
+          <input type="range" id="ed-r-ini" step="0.1"><input type="range" id="ed-r-fim" step="0.1">
+        </div>
+        <div class="ed-tempos">
+          <div>
+            <b>Início</b> <span id="ed-t-ini"></span>
+            <div class="mini-bts"><button class="sec" data-ajuste="ini:-1">−1s</button><button class="sec" data-ajuste="ini:-0.2">−0,2</button>
+              <button class="sec" data-ajuste="ini:0.2">+0,2</button><button class="sec" data-ajuste="ini:1">+1s</button></div>
+            <button class="sec" data-marcar="ini">⇤ Marcar início aqui</button>
+          </div>
+          <div class="ed-dur"><span id="ed-dur"></span><button id="ed-play">▶ Prévia do corte</button></div>
+          <div>
+            <b>Fim</b> <span id="ed-t-fim"></span>
+            <div class="mini-bts"><button class="sec" data-ajuste="fim:-1">−1s</button><button class="sec" data-ajuste="fim:-0.2">−0,2</button>
+              <button class="sec" data-ajuste="fim:0.2">+0,2</button><button class="sec" data-ajuste="fim:1">+1s</button></div>
+            <button class="sec" data-marcar="fim">Marcar fim aqui ⇥</button>
+          </div>
+        </div>
+      </div>
+      <div class="ed-lado">
+        <label>Título no vídeo<textarea id="ed-titulo" rows="2"></textarea></label>
+        <label>Marca d'água deste corte<input id="ed-marca" placeholder="@seucanal"></label>
+        <div class="checks">
+          <label><input type="checkbox" id="ed-legendas"> Legendas</label>
+          <label><input type="checkbox" id="ed-mostrar-titulo"> Mostrar título</label>
+        </div>
+        <label>Descrição do post <span class="contador" id="ed-cont"></span><textarea id="ed-desc" rows="8"></textarea></label>
+        <button class="sec" id="ed-gerar-desc">↻ Gerar descrição de novo</button>
+        <div class="botoes fim">
+          <button class="sec" data-fechar>Cancelar</button>
+          <button id="ed-salvar">💾 Salvar e refazer o vídeo</button>
+        </div>
+        <p class="dica">Mudou início/fim? As legendas são refeitas para o novo trecho.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================== MODAL POSTAR -->
+<div class="modal" id="modal-postar" hidden>
+  <div class="caixa">
+    <div class="modal-topo"><h2>📤 Postar corte <span class="po-n"></span></h2><button class="fechar" data-fechar>✕</button></div>
+    <div class="po-grade">
+      <video id="po-video" controls playsinline preload="metadata"></video>
+      <div>
+        <label>Legenda / descrição <span class="contador" id="po-cont"></span><textarea id="po-desc" rows="9"></textarea></label>
+        <div class="rede" id="po-tiktok">
+          <label class="rede-topo"><input type="checkbox" id="po-tk"> <b>TikTok</b> <span class="rede-estado"></span></label>
+          <div class="rede-op">
+            <label>Modo
+              <select id="po-tk-modo">
+                <option value="rascunho">Enviar para rascunhos (finalizo no app)</option>
+                <option value="direto">Postar direto</option>
+              </select>
+            </label>
+            <label class="so-direto">Quem pode ver<select id="po-tk-priv"></select></label>
+            <div class="checks so-direto">
+              <label><input type="checkbox" id="po-tk-com" checked> Comentários</label>
+              <label><input type="checkbox" id="po-tk-duet" checked> Dueto</label>
+              <label><input type="checkbox" id="po-tk-stitch" checked> Stitch</label>
+            </div>
+          </div>
+        </div>
+        <div class="rede" id="po-instagram">
+          <label class="rede-topo"><input type="checkbox" id="po-ig"> <b>Instagram Reels</b> <span class="rede-estado"></span></label>
+          <div class="rede-op"><div class="checks"><label><input type="checkbox" id="po-ig-feed" checked> Mostrar também no feed</label></div></div>
+        </div>
+        <div class="botoes fim">
+          <button class="sec" data-fechar>Cancelar</button>
+          <button id="po-enviar">📤 Publicar</button>
+        </div>
+        <div class="msg" id="po-msg"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================================================== TEMPLATES -->
+<template id="tpl-job">
+  <article class="job">
+    <div class="job-topo">
+      <div><div class="job-titulo"></div><div class="job-meta"></div></div>
+      <div class="job-acoes">
+        <button class="sec trocar-marca" title="Trocar o @ da marca d'água desta live">🏷 @</button>
+        <button class="sec abrir">📁 Pasta</button>
+        <button class="sec log-btn">Log</button>
+      </div>
+    </div>
+    <div class="barra"><div class="preench"></div></div>
+    <div class="etapa"></div>
+    <pre class="log" hidden></pre>
+    <div class="linha-tempo" hidden>
+      <canvas></canvas>
+      <div class="legenda-lt">
+        <span><i class="c-total"></i>combinado</span><span><i class="c-vol"></i>volume</span>
+        <span><i class="c-voz"></i>voz</span><span><i class="c-chat"></i>chat</span>
+        <span><i class="c-replay"></i>mais repetidos</span><span><i class="faixa"></i>cortes</span><span class="lt-hora"></span>
+      </div>
+    </div>
+    <div class="clipes"></div>
+  </article>
+</template>
+
+<template id="tpl-clipe">
+  <div class="clipe">
+    <div class="clipe-video"><video controls preload="metadata" playsinline></video><span class="clipe-num"></span></div>
+    <div class="clipe-info">
+      <div class="linha"><span class="badge nota"></span><span class="na-live"></span></div>
+      <div class="clipe-titulo"></div>
+      <div class="motivos"></div>
+      <div class="posts"></div>
+      <div class="clipe-bts">
+        <button class="sec editar">✏ Editar</button>
+        <button class="postar">📤 Postar</button>
+        <a class="sec baixar" download title="Baixar">⬇</a>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  window.PADRAO = {{ padrao|tojson }};
+  window.PERFIS = {{ perfis|tojson }};
+</script>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+flask>=3.0
+numpy>=1.26
+yt-dlp[default,curl-cffi]>=2025.11.12
+faster-whisper>=1.1.0
